@@ -1,0 +1,90 @@
+
+  {% extends "base.html" %}
+
+  {% block title %}My courses{% endblock %}
+  
+  {% block content %}  
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper" >
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item nav-profile">
+            <a href="#" class="nav-link">
+              <div class="nav-profile-image">
+                <img src="assets/images/faces/face1.jpg" alt="profile">
+                <span class="login-status online"></span>
+                <!--change to offline or busy as needed-->
+              </div>
+              <div class="nav-profile-text d-flex flex-column">
+                <span class="font-weight-bold mb-2">David Grey. H</span>
+                <span class="text-secondary text-small">Project Manager</span>
+              </div>
+              <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <span class="menu-title">Dashboard</span>
+              <i class="mdi mdi-home menu-icon"></i>
+            </a>
+          </li>
+    
+          <li class="nav-item sidebar-actions">
+            <span class="nav-link">
+              <div class="border-bottom">
+                <h6 class="font-weight-normal mb-3">Projects</h6>
+              </div>
+              <a href="{% url "course_create" %}">
+              <button class="btn btn-block btn-lg btn-gradient-primary mt-4">+ Add a project</button>
+              </a>
+            </span>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-panel">
+        <div class="content-wrapper">
+       
+          <div class="page-header">
+            <h3 class="page-title">
+              <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-home"></i>
+              </span> Dashboard </h3>
+            <nav aria-label="breadcrumb">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                  <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="row">
+            {% for course in object_list %}
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-danger card-img-holder text-white">
+                <div class="card-body">
+                  <img src="assets/images/dashboard/circle.svg}" class="card-img-absolute" alt="circle-image" />
+                  <h4 class="font-weight-normal mb-3">{{ course.title }}<i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                  </h4>
+                  
+                  <h6 class="card-text"><a href="{% url "course_edit" course.id %}">EDIT</a></h6>
+                  <h6 class="card-text"><a href="{% url "course_delete" course.id %}">DELETE</a></h6>
+                  <h6 class="card-text"><a href="{% url "course_module_update" course.id %}">EDIT MODULES</a></h6>
+                  {% if course.modules.count > 0 %}
+                  <h6 class="card-text"><a href="{% url "module_content_list" course.modules.first.id %}">MANAGE CONTENT</a></h6>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% empty %}
+            <p>You haven't created any courses yet.</p>
+        {% endfor %}
+        
+          </div>
+       
+  
+        </div>
+    </div>
+</div>
+{% endblock %} 
